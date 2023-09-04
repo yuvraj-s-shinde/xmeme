@@ -4,13 +4,29 @@
 
 package com.crio.starter;
 
+import com.crio.starter.service.MemesServiceImpl;
+import com.crio.starter.repository.MemesRepository;
+import com.crio.starter.repositoryservices.MemesRepositoryService;
+import com.crio.starter.repositoryservices.MemesRepositoryServiceImpl;
+import com.crio.starter.service.MemesService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class App {
 
   public static void main(String[] args) {
     SpringApplication.run(App.class, args);
+  }
+
+  @Bean
+  public MemesService memesService() {
+    return new MemesServiceImpl();
+  }
+
+  @Bean
+  public MemesRepositoryService memesRepositoryService() {
+    return new MemesRepositoryServiceImpl();
   }
 }
