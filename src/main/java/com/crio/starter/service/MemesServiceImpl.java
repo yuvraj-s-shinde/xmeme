@@ -5,6 +5,7 @@ import com.crio.starter.exchange.CreateMemeResponse;
 import com.crio.starter.repositoryservices.MemesRepositoryService;
 import com.crio.starter.repository.MemesRepository;
 import com.crio.starter.data.MemesEntity;
+import com.crio.starter.dto.Meme;
 import java.util.Optional;
 import com.crio.starter.exchange.ResponseDto;
 import com.crio.starter.repository.GreetingsRepository;
@@ -13,19 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+// @RequiredArgsConstructor
 public class MemesServiceImpl implements MemesService {
 
   @Autowired
   private MemesRepositoryService memesRepositoryService;
 
   public CreateMemeResponse createMeme(CreateMemeRequest createMemeRequest) {
-    Optional<MemesEntity> meme = memesRepositoryService.createMeme(createMemeRequest);
-    if (meme.isPresent()) {
-      return new CreateMemeResponse(meme.get().getId());
-    }
-    else {
-      return null;
-    }
+    Meme meme = memesRepositoryService.createMeme(createMemeRequest);
+    return new CreateMemeResponse(String.valueOf(meme.getId()));
   }
 }

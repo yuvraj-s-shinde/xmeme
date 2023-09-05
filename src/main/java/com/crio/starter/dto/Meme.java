@@ -29,10 +29,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Memes {
+public class Meme {
 
   @NotNull @JsonIgnore
-  private String id;
+  private long id;
 
   @NotNull
   private String name;

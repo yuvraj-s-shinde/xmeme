@@ -6,25 +6,25 @@ import java.util.Optional;
 import java.util.ArrayList;
 import java.util.concurrent.Future;
 import com.crio.starter.data.MemesEntity;
-import com.crio.starter.dto.Memes;
+import com.crio.starter.dto.Meme;
 import com.crio.starter.exchange.CreateMemeRequest;
+import com.crio.starter.repository.MemesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 
 public class MemesRepositoryServiceImpl implements MemesRepositoryService {
 
-  /**
-   * Get the list of open restaurants within the specified serving radius.
-   *   - Use the Haversine formula to find the distance between two lat/longs.
-   *   - Ensure the restaurant is open currently.
-   * @param latitude coordinates near which we have to search for restaurant
-   * @param longitude coordinates near which we have to search for restaurant
-   * @param currentTime current time
-   * @param servingRadiusInKms serving radius
-   * @return list of open restaurants within the specified radius or
-   *     empty list if there is none
-   */
-    public Optional<MemesEntity> createMeme(CreateMemeRequest createMemeRequest) {
-        return Optional.of(new MemesEntity());
-  }
+  @Autowired
+  MemesRepository memesRepository;
+  
+  public Meme createMeme(CreateMemeRequest createMemeRequest) {
+    MemesEntity memeDocument  = new MemesEntity();
+    memeDocument.setCaption(createMemeRequest.getCaption());
+    memeDocument.setName(createMemeRequest.getName());
+    memeDocument.setUrl(createMemeRequest.getUrl());
+    memesRepository.save(memeDocument);
 
+    return new Meme(memeDocument.getId(), memeDocument.getName(), memeDocument.getUrl(), memeDocument.getCaption());  
+  }
+  
 }

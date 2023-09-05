@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class MemesController {
   private MemesService memesService;
 
   @PostMapping("/memes")
-  public CreateMemeResponse createMeme (@Valid CreateMemeRequest createMemeRequest) {
+  public CreateMemeResponse createMeme (@Valid @RequestBody CreateMemeRequest createMemeRequest) {
     CreateMemeResponse createMemeResponse;
     createMemeResponse = memesService.createMeme(createMemeRequest);
     return createMemeResponse;
