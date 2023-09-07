@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CreateMemeResponse {
+public class GetMemeRequest {
 
   @NotNull
   private String id;

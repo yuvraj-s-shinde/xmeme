@@ -22,7 +22,7 @@ public class SequenceGenerator {
     }
 
     public long generateSequence(String seqName) {
-        Criteria criteria = new Criteria("_id").is(seqName);
+        Criteria criteria = new Criteria("id").is(seqName);
         Query query = Query.query(criteria);
         FindAndModifyOptions options = new FindAndModifyOptions();
         options.returnNew(true).upsert(true);

@@ -18,7 +18,8 @@ public class MemesEntity {
   public static final String SEQUENCE_NAME = "meme_sequences";
 
   @Id
-  private long id;
+  @NotNull
+  private Long id;
 
   @NotNull
   private String name;

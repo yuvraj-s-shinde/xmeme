@@ -18,7 +18,7 @@ public class MemeListener extends AbstractMongoEventListener<MemesEntity> {
 
     @Override
     public void onBeforeConvert(BeforeConvertEvent<MemesEntity> event) {
-        if (event.getSource().getId() < 1) {
+        if (event.getSource().getId() == null || event.getSource().getId() < 1) {
             event.getSource().setId(sequenceGenerator.generateSequence(MemesEntity.SEQUENCE_NAME));
         }
     }

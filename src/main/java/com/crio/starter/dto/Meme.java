@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 public class Meme {
 
   @NotNull @JsonIgnore
-  private long id;
+  private Long id;
 
   @NotNull
   private String name;

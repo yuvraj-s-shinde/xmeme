@@ -1,11 +1,17 @@
 package com.crio.starter.service;
 
 import com.crio.starter.exchange.CreateMemeRequest;
+import com.crio.starter.exchange.GetMemeResponse;
 import com.crio.starter.exchange.CreateMemeResponse;
+import com.crio.starter.exchange.GetMemeRequest;
 import com.crio.starter.repositoryservices.MemesRepositoryService;
 import com.crio.starter.repository.MemesRepository;
 import com.crio.starter.data.MemesEntity;
 import com.crio.starter.dto.Meme;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import com.crio.starter.exchange.ResponseDto;
 import com.crio.starter.repository.GreetingsRepository;
@@ -22,6 +28,42 @@ public class MemesServiceImpl implements MemesService {
 
   public CreateMemeResponse createMeme(CreateMemeRequest createMemeRequest) {
     Meme meme = memesRepositoryService.createMeme(createMemeRequest);
-    return new CreateMemeResponse(String.valueOf(meme.getId()));
+    if (meme == null) {
+      return null;
+    } else {
+      return new CreateMemeResponse(String.valueOf(meme.getId()));
+    }
+  }
+
+  public List<GetMemeResponse> getMemes() {
+    List<Meme> memes = memesRepositoryService.getMemes();
+    List<GetMemeResponse> getMemeResponse = new ArrayList<>();
+    int count = 0;
+    for (Meme meme: memes) {
+      if (count < 100) {
+        getMemeResponse.add(new GetMemeResponse(String.valueOf(meme.getId()), meme.getName(), meme.getUrl(), meme.getCaption()));
+        count++;
+      }
+      else {
+        break;
+      }
+    }
+    Collections.sort(getMemeResponse, new Comparator<GetMemeResponse>() {
+      @Override
+      public int compare(GetMemeResponse m1, GetMemeResponse m2) {
+        return m1.getName().compareTo(m2.getName());
+      }
+    });
+    return getMemeResponse;
+
+  }
+
+  public GetMemeResponse getMemeById(GetMemeRequest getMemeRequest) {
+    Meme meme = memesRepositoryService.getMemeById(getMemeRequest);
+    if (meme != null) {
+      return new GetMemeResponse(String.valueOf(meme.getId()), meme.getName(), meme.getUrl(), meme.getCaption());
+    } else {
+      return null;
+    }
   }
 }
