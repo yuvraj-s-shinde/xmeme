@@ -37,23 +37,32 @@ public class MemesServiceImpl implements MemesService {
 
   public List<GetMemeResponse> getMemes() {
     List<Meme> memes = memesRepositoryService.getMemes();
+    List<Meme> latest100Memes = new ArrayList<>();
     List<GetMemeResponse> getMemeResponse = new ArrayList<>();
-    int count = 0;
-    for (Meme meme: memes) {
-      if (count < 100) {
-        getMemeResponse.add(new GetMemeResponse(String.valueOf(meme.getId()), meme.getName(), meme.getUrl(), meme.getCaption()));
-        count++;
-      }
-      else {
-        break;
-      }
+    if (memes.size() > 100) {
+      latest100Memes = memes.subList(memes.size() - 100, memes.size());
     }
-    Collections.sort(getMemeResponse, new Comparator<GetMemeResponse>() {
-      @Override
-      public int compare(GetMemeResponse m1, GetMemeResponse m2) {
-        return m1.getName().compareTo(m2.getName());
-      }
-    });
+    else {
+      latest100Memes = memes;
+    }
+    Collections.reverse(latest100Memes);
+    // int count = 0;
+    for (Meme meme: latest100Memes) {
+      // if (count < 100) {
+      getMemeResponse.add(new GetMemeResponse(String.valueOf(meme.getId()), meme.getName(), meme.getUrl(), meme.getCaption()));
+        // count++;
+      // }
+      // else {
+      //   break;
+      // }
+    }
+    
+    // Collections.sort(getMemeResponse, new Comparator<GetMemeResponse>() {
+    //   @Override
+    //   public int compare(GetMemeResponse m1, GetMemeResponse m2) {
+    //     return m1.getId().compareTo(m2.getId());
+    //   }
+    // });
     return getMemeResponse;
 
   }
